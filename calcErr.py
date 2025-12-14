@@ -4,9 +4,9 @@ from scipy.linalg import expm
 import cv2
 
 def se3Exp(twist):
-    M = np.array([[0, -twist[5], twist[4], twist[0]],
-                  [twist[5], 0, -twist[3], twist[1]],
-                  [-twist[4], twist[3], 0, twist[2]],
+    M = np.array([[0, -twist[5].item(), twist[4].item(), twist[0].item()],
+                  [twist[5].item(), 0, -twist[3].item(), twist[1].item()],
+                  [-twist[4].item(), twist[3].item(), 0, twist[2].item()],
                   [0, 0, 0, 0]])
     return expm(M)
 
@@ -56,7 +56,7 @@ def test(): # for testing
     import matplotlib.image as mpimg
     from downscale import downscale
 
-    # use cv2.imread to read grayscale images as float
+    # use cv2.imread to convert grayscale images as float
     # because map_coordinates requires float inputs
     IRef = cv2.imread("rgb/1305031102.175304.png", cv2.IMREAD_GRAYSCALE).astype(float)
     DRef = cv2.imread("depth/1305031102.160407.png", cv2.IMREAD_GRAYSCALE).astype(float)
@@ -69,7 +69,7 @@ def test(): # for testing
                   [0.0, 0.0, 1.0]])
     
     # camera pose 6D vector
-    xi = np.array([0.0, 0.0, 0.0, 0.0, 0.0, 0.0]) # small rotation around z-axis
+    xi = np.array([0.0, 0.0, 0.0, 0.0, 0.0, 0.0]) #
     err = calcErr(IRef, DRef, I, xi, K)
 
     #visualize error as image
